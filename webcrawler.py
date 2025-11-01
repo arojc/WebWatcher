@@ -6,13 +6,6 @@ from bs4 import BeautifulSoup
 import re
 import time
 
-from soundwarning import ObvestiloZvok
-
-# Globalni spremenljivki
-url = "https://e-uprava.gov.si/e-uprava/oglasnadeska.html?lang=si#eyJmaWx0ZXJzIjp7InR5cGUiOlsiLSJdLCJwZXJpb2RhIjpbIi0iXSwicmlqcyI6WyIyMjk2Il0sIm9mZnNldCI6WyIwIl0sInNlbnRpbmVsX3R5cGUiOlsib2siXSwic2VudGluZWxfc3RhdHVzIjpbIm9rIl0sImlzX2FqYXgiOlsiMSJdfX0="
-# string = "330-189"
-string = "20 rezultatov"
-
 class web_crawler:
 
     def __init__(self, url, iskani_niz, obvestilo_zvok=None):
@@ -33,7 +26,7 @@ class web_crawler:
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
         try:
-            driver.get(url)
+            driver.get(self.url)
             time.sleep(5)  # počakaj, da se JS naloži - prilagodi po potrebi
 
             html = driver.page_source
@@ -46,15 +39,15 @@ class web_crawler:
             normalized_text = re.sub(r"\s+", " ", text).strip()
 
             # Tudi string normaliziramo na enak način
-            normalized_string = re.sub(r"\s+", " ", string).strip()
+            normalized_string = re.sub(r"\s+", " ", self.string).strip()
 
             if normalized_string.lower() in normalized_text.lower():
-                print(f"Niz '{string}' JE bil najden na strani {url}.")
-                self.obvestilo_zvok.predvajaj()
+                report = f"Niz '{self.string}' JE bil {normalized_text.lower().count(normalized_string.lower())}-krat najden na strani."
+                return report
             else:
-                print(f"Niz '{string}' NI bil najden na strani {url}.")
+                report = f"Niz '{self.string}' NI bil najden na strani."
+                return report
         except Exception as e:
             print(f"Napaka: {e}")
         finally:
             driver.quit()
-
