@@ -39,12 +39,7 @@ class web_crawler:
             # Tudi string normaliziramo na enak način
             normalized_string = re.sub(r"\s+", " ", self.string).strip()
 
-            if normalized_string.lower() in normalized_text.lower():
-                report = f"Niz '{self.string}' JE bil {normalized_text.lower().count(normalized_string.lower())}-krat najden na strani."
-                return report
-            else:
-                report = f"Niz '{self.string}' NI bil najden na strani."
-                return report
+            return normalized_text.lower().count(normalized_string.lower())
         except Exception as e:
             print(f"Napaka: {e}")
         finally:

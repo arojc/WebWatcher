@@ -1,22 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
+import misc_lib
 import threading
-
 from webwatcher import webwatcher
+import webbrowser
 
 case_sensitive = False
-url = "https://e-uprava.gov.si/e-uprava/oglasnadeska.html?lang=si#eyJmaWx0ZXJzIjp7InR5cGUiOlsiLSJdLCJwZXJpb2RhIjpbIi0iXSwicmlqcyI6WyIyMjk2Il0sIm9mZnNldCI6WyIwIl0sInNlbnRpbmVsX3R5cGUiOlsib2siXSwic2VudGluZWxfc3RhdHVzIjpbIm9rIl0sImlzX2FqYXgiOlsiMSJdfX0="
-word = "radomlje"
-
-
-import webbrowser
-# import tkinter as tk
-
-import webbrowser
-# import tkinter as tk
-
-import webbrowser
-import tkinter as tk
 
 def vstavi_link(text_widget: tk.Text, besedilo: str, url: str):
     text_widget.configure(state="normal")
@@ -78,16 +67,15 @@ def toggle_case():
 
 
 def izvedi():
-    """Tukaj bo kasneje glavna logika."""
 
-    # url = "https://e-uprava.gov.si/e-uprava/oglasnadeska.html?lang=si#eyJmaWx0ZXJzIjp7InR5cGUiOlsiLSJdLCJwZXJpb2RhIjpbIi0iXSwicmlqcyI6WyIyMjk2Il0sIm9mZnNldCI6WyIwIl0sInNlbnRpbmVsX3R5cGUiOlsib2siXSwic2VudGluZWxfc3RhdHVzIjpbIm9rIl0sImlzX2FqYXgiOlsiMSJdfX0="
-    # word = "radomlje"
+    the_url = url_entry.get()
+    the_word = word_entry.get()
 
-    report = str(webwatcher(url_entry.get(), word_entry.get()))
+    result = webwatcher(the_url, the_word)
 
-    log(report)
+    log(misc_lib.make_report_str_found(result, the_word))
 
-    vstavi_link(output_text, "Odpri OpenAI", "https://www.openai.com")
+    vstavi_link(output_text, "Oglasna Deska", the_url)
     output_text.configure(state="normal")
     output_text.insert("end", "\n")  # nova vrstica
     output_text.configure(state="disabled")
@@ -108,13 +96,13 @@ def main():
     # URL polje
     tk.Label(root, text="URL:").pack(anchor="w", padx=10, pady=5)
     url_entry = ttk.Entry(root, width=60)
-    url_entry.insert(0, url)
+    url_entry.insert(0, misc_lib.url)
     url_entry.pack(padx=10, pady=5)
 
     # Beseda polje
     tk.Label(root, text="Beseda").pack(anchor="w", padx=10, pady=5)
     word_entry = ttk.Entry(root, width=30)
-    word_entry.insert(0, word)
+    word_entry.insert(0, misc_lib.searched_text)
     word_entry.pack(padx=10, pady=5)
 
     # Gumbi v vrstici
