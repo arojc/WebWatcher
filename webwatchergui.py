@@ -15,26 +15,40 @@ import webbrowser
 import webbrowser
 # import tkinter as tk
 
+import webbrowser
+import tkinter as tk
+
 def vstavi_link(text_widget: tk.Text, besedilo: str, url: str):
-    start_index = text_widget.index("insert")
-    text_widget.insert("insert", besedilo)
+    text_widget.configure(state="normal")
 
-    end_index = text_widget.index("insert")
+    start = text_widget.index("end-1c")
+    text_widget.insert("end", besedilo)
+    end = text_widget.index("end-1c")
 
-    tag_name = f"link_{start_index}"
+    tag = f"link_{start.replace('.', '_')}"
 
-    text_widget.tag_add(tag_name, start_index, end_index)
+    text_widget.tag_add(tag, start, end)
+
+    # osnovni izgled linka
     text_widget.tag_config(
-        tag_name,
+        tag,
         foreground="blue",
         underline=True
     )
 
+    # hover efekt
+    text_widget.tag_bind(tag, "<Enter>", lambda e: text_widget.config(cursor="hand2"))
+    text_widget.tag_bind(tag, "<Leave>", lambda e: text_widget.config(cursor=""))
+
+    # klik
     text_widget.tag_bind(
-        tag_name,
+        tag,
         "<Button-1>",
-        lambda e: webbrowser.open(url)
+        lambda e: webbrowser.open_new_tab(url)
     )
+
+    text_widget.configure(state="disabled")
+
 
 
 
@@ -73,14 +87,10 @@ def izvedi():
 
     log(report)
 
-    root = tk.Tk()
-
-    text = tk.Text(root, width=50, height=10)
-    text.pack()
-
-    vstavi_link(text, "Odpri OpenAI", "https://www.openai.com")
-
-    root.mainloop()
+    vstavi_link(output_text, "Odpri OpenAI", "https://www.openai.com")
+    output_text.configure(state="normal")
+    output_text.insert("end", "\n")  # nova vrstica
+    output_text.configure(state="disabled")
 
 
 def izvedi_async():
