@@ -9,6 +9,35 @@ url = "https://e-uprava.gov.si/e-uprava/oglasnadeska.html?lang=si#eyJmaWx0ZXJzIj
 word = "radomlje"
 
 
+import webbrowser
+# import tkinter as tk
+
+import webbrowser
+# import tkinter as tk
+
+def vstavi_link(text_widget: tk.Text, besedilo: str, url: str):
+    start_index = text_widget.index("insert")
+    text_widget.insert("insert", besedilo)
+
+    end_index = text_widget.index("insert")
+
+    tag_name = f"link_{start_index}"
+
+    text_widget.tag_add(tag_name, start_index, end_index)
+    text_widget.tag_config(
+        tag_name,
+        foreground="blue",
+        underline=True
+    )
+
+    text_widget.tag_bind(
+        tag_name,
+        "<Button-1>",
+        lambda e: webbrowser.open(url)
+    )
+
+
+
 def log(message: str):
     """Izpiše sporočilo v tekstovno polje."""
     output_text.config(state="normal")
@@ -43,6 +72,15 @@ def izvedi():
     report = str(webwatcher(url_entry.get(), word_entry.get()))
 
     log(report)
+
+    root = tk.Tk()
+
+    text = tk.Text(root, width=50, height=10)
+    text.pack()
+
+    vstavi_link(text, "Odpri OpenAI", "https://www.openai.com")
+
+    root.mainloop()
 
 
 def izvedi_async():

@@ -1,7 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
+from webdriver_manager.firefox import GeckoDriverManager
 from bs4 import BeautifulSoup
 import re
 import time
@@ -16,14 +16,12 @@ class web_crawler:
     def preveri_string_v_url(self):
         # Nastavitve za "headless" brskanje (brez GUI-ja)
         options = Options()
-        options.add_argument("--headless=new")  # novi headless način
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--window-size=1920,1080")  # pomembno za nek JS render
+        options.add_argument("-headless")  # novi headless način
+        options.set_preference("dom.webdriver.enabled", False)
+        options.set_preference("useAutomationExtension", False)
 
         # Zaženi brskalnik
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
 
         try:
             driver.get(self.url)
