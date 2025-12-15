@@ -102,7 +102,7 @@ def main():
     # Beseda polje
     tk.Label(root, text="Beseda").pack(anchor="w", padx=10, pady=5)
     word_entry = ttk.Entry(root, width=30)
-    word_entry.insert(0, misc_lib.searched_text)
+    word_entry.insert(0, misc_lib.load())
     word_entry.pack(padx=10, pady=5)
 
     # Gumbi v vrstici
@@ -118,12 +118,18 @@ def main():
     clear_btn = ttk.Button(btn_frame, text="Počisti", command=clear_output)
     clear_btn.pack(side="left", padx=5)
 
+    clear_btn = ttk.Button(btn_frame, text="Shrani", command=save_value)
+    clear_btn.pack(side="left", padx=5)
+
     # Output polje
     tk.Label(root, text="Rezultati:").pack(anchor="w", padx=10, pady=5)
     output_text = tk.Text(root, height=12, width=70, state="disabled", wrap="word")
     output_text.pack(padx=10, pady=5, fill="both", expand=True)
 
     root.mainloop()
+
+def save_value():
+    misc_lib.save(word_entry.get())
 
 
 if __name__ == "__main__":

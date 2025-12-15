@@ -37,8 +37,8 @@ def okno_z_linkom(text_widget: tk.Text, besedilo: str, url: str):
 if __name__ == "__main__":
     zvok_obvestilo = ObvestiloZvok()
 
-    result_num = webwatcher(misc_lib.url, misc_lib.searched_text)
-    print("webwatcher " + misc_lib.searched_text + " " + str(result_num))
+    result_num = webwatcher(misc_lib.url, misc_lib.load())
+    print("webwatcher " + misc_lib.load() + " " + str(result_num))
 
     if result_num > 0:
         zvok_obvestilo.predvajaj()
