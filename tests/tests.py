@@ -13,8 +13,12 @@ class WebwatcherTests(unittest.TestCase):
         self.assertTrue(True)
 
     def test_save(self):
+        misc_lib.save("hudo")
+        kraj = misc_lib.load()
+        self.assertEqual(kraj, "hudo")
         misc_lib.save("radomlje")
-        self.assertTrue(True)
+        kraj = misc_lib.load()
+        self.assertEqual(kraj, "radomlje")
 
 
 if __name__ == '__main__':
