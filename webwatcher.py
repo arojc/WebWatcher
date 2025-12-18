@@ -47,7 +47,7 @@ if __name__ == "__main__":
         root = tk.Tk()
         text = tk.Text(root, width=50, height=10)
         text.pack()
-        okno_z_linkom(text, misc_lib.make_report_str_found(result_num, misc_lib.load()), misc_lib.url)
+        okno_z_linkom(text, misc_lib.make_report_str_found(result_num, misc_lib.load()), misc_lib.load())
         root.attributes("-topmost", True)
         root.mainloop()
     else:

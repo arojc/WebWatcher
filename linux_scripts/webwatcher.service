@@ -1,0 +1,14 @@
+[Unit]
+Description=WebWatcher background service
+After=default.target network-online.target
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sleep 30
+ExecStart=/home/antonrojc/PycharmProjects/WebWatcher/dist/webwatcher/webwatcher
+WorkingDirectory=/home/antonrojc/PycharmProjects/WebWatcher
+Restart=no
+
+[Install]
+WantedBy=default.target
+
