@@ -102,7 +102,7 @@ def main():
     # Beseda polje
     tk.Label(root, text="Beseda").pack(anchor="w", padx=10, pady=5)
     word_entry = ttk.Entry(root, width=30)
-    word_entry.insert(0, misc_lib.load())
+    word_entry.insert(0, misc_lib.get_text_searched())
     word_entry.pack(padx=10, pady=5)
 
     # Gumbi v vrstici
@@ -129,7 +129,7 @@ def main():
     root.mainloop()
 
 def save_value():
-    misc_lib.save(word_entry.get())
+    misc_lib.set_text_searched(word_entry.get())
 
 
 if __name__ == "__main__":

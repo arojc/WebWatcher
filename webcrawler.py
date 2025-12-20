@@ -5,6 +5,8 @@ from webdriver_manager.firefox import GeckoDriverManager
 from bs4 import BeautifulSoup
 import re
 import time
+import socket
+import simple_gui as sg
 
 class web_crawler:
 
@@ -19,6 +21,8 @@ class web_crawler:
         options.add_argument("-headless")  # novi headless način
         options.set_preference("dom.webdriver.enabled", False)
         options.set_preference("useAutomationExtension", False)
+
+        self.wait_for_internet()
 
         # Zaženi brskalnik
         driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
@@ -44,3 +48,30 @@ class web_crawler:
             print(f"Napaka: {e}")
         finally:
             driver.quit()
+
+
+    def wait_for_internet(self, interval: int = 5, timeout: int = 3):
+        root = None
+        popup_shown = False
+
+        while True:
+            try:
+                socket.create_connection(("8.8.8.8", 53), timeout=timeout)
+
+                # Če je popup odprt, ga zapremo
+                if popup_shown and root:
+                    sg.close_popup()
+
+                print("Internetna povezava je na voljo.")
+                return
+
+            except OSError:
+                print("Ni interneta.")
+
+                if not popup_shown:
+                    popup_shown = True
+                    sg.open_popup("Ni internetne povezave", None)
+
+                time.sleep(interval)
+
+

@@ -16,11 +16,11 @@ CFG_DIR = os.path.join(os.path.expanduser("~"), ".config", APP)
 CFG = os.path.join(CFG_DIR, "config.json")
 os.makedirs(CFG_DIR, exist_ok=True)
 
-def load():
+def get_text_searched():
     if os.path.exists(CFG):
         return json.load(open(CFG))["n"]
     return searched_text
 
-def save(n):
+def set_text_searched(n):
     print("save: " + n)
     json.dump({"n": n}, open(CFG, "w"))
