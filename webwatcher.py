@@ -8,7 +8,7 @@ def webwatcher(url, searched_text):
 
     zvok_obvestilo = ObvestiloZvok()
 
-    preverjalnik = web_crawler(url, searched_text, zvok_obvestilo)
+    preverjalnik = web_crawler(url, searched_text.split(','), zvok_obvestilo)
     result_num = preverjalnik.preveri_string_v_url()
     return result_num
 

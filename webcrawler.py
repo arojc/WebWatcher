@@ -10,9 +10,9 @@ import simple_gui as sg
 
 class web_crawler:
 
-    def __init__(self, url, iskani_niz, obvestilo_zvok=None):
+    def __init__(self, url, iskani_nizi, obvestilo_zvok=None):
         self.url = url
-        self.string = iskani_niz
+        self.stringi = iskani_nizi
         self.obvestilo_zvok = obvestilo_zvok
 
     def preveri_string_v_url(self):
@@ -40,10 +40,14 @@ class web_crawler:
             # Normaliziramo presledke (odstranimo več zaporednih presledkov, tabov, \n itd.)
             normalized_text = re.sub(r"\s+", " ", text).strip()
 
-            # Tudi string normaliziramo na enak način
-            normalized_string = re.sub(r"\s+", " ", self.string).strip()
+            thesum = 0
+            for word in self.stringi:
+                # Tudi string normaliziramo na enak način
+                normalized_string = re.sub(r"\s+", " ", word).strip()
+                thesum += normalized_text.lower().count(normalized_string.lower())
 
-            return normalized_text.lower().count(normalized_string.lower())
+
+            return thesum
         except Exception as e:
             print(f"Napaka: {e}")
         finally:
