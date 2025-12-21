@@ -23,11 +23,11 @@ class WebwatcherTests(unittest.TestCase):
     def test_data_man(self):
         data = data_man()
         watch_list = {}
-        watch_list["url"] = ["ena", "dva"]
+        watch_list["name"] = ["url", "kobcina"]
         data.set_data(watch_list)
         watch_list1 = data.get_data()
         self.assertEqual(len(watch_list1), 1)
-        self.assertEqual(len(watch_list1["url"]), 2)
+        self.assertEqual(len(watch_list1["name"]), 2)
 
 
 if __name__ == '__main__':

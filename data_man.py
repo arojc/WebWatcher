@@ -24,11 +24,12 @@ class data_man():
 
 
 if __name__ == "__main__":
-
+    name = "uedomzale"
     dm = data_man()
-    dm.watch_list[url] = []
-    dm.watch_list[url].append("radomlje")
-    dm.watch_list[url].append("trzin")
+    dm.watch_list[name] = []
+    dm.watch_list[name].append("url")
+    dm.watch_list[name].append("radomlje")
+    dm.watch_list[name].append("trzin")
     dm.set_data(dm.watch_list)
     data = dm.get_data()
     print(data)

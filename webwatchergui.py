@@ -68,6 +68,7 @@ def toggle_case():
 
 def izvedi():
 
+    the_name = name_entry.get()
     the_url = url_entry.get()
     the_word = word_entry.get()
 
@@ -75,7 +76,7 @@ def izvedi():
 
     log(misc_lib.make_report_str_found(result, the_word))
 
-    vstavi_link(output_text, "Oglasna Deska", the_url)
+    vstavi_link(output_text, the_name, the_url)
     output_text.configure(state="normal")
     output_text.insert("end", "\n")  # nova vrstica
     output_text.configure(state="disabled")
@@ -87,11 +88,17 @@ def izvedi_async():
 
 
 def main():
-    global url_entry, word_entry, case_btn, output_text
+    global name_entry, url_entry, word_entry, case_btn, output_text
 
     root = tk.Tk()
     root.title("Iskalni GUI")
     root.geometry("600x420")
+
+    # Ime polje
+    tk.Label(root, text="Ime:").pack(anchor="w", padx=10, pady=5)
+    name_entry = ttk.Entry(root, width=60)
+    name_entry.insert(0, misc_lib.name)
+    name_entry.pack(padx=10, pady=5)
 
     # URL polje
     tk.Label(root, text="URL:").pack(anchor="w", padx=10, pady=5)
