@@ -54,5 +54,5 @@ if __name__ == "__main__":
     open_popup(
         "Na strani je bila najdena sprememba.",
         None,
-        5000
+        5
     )

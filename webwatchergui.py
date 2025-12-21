@@ -118,8 +118,8 @@ def main():
     clear_btn = ttk.Button(btn_frame, text="Počisti", command=clear_output)
     clear_btn.pack(side="left", padx=5)
 
-    clear_btn = ttk.Button(btn_frame, text="Shrani", command=save_value)
-    clear_btn.pack(side="left", padx=5)
+    save_btn = ttk.Button(btn_frame, text="Shrani", command=save_value)
+    save_btn.pack(side="left", padx=5)
 
     # Output polje
     tk.Label(root, text="Rezultati:").pack(anchor="w", padx=10, pady=5)
@@ -130,6 +130,12 @@ def main():
 
 def save_value():
     misc_lib.set_text_searched(word_entry.get())
+
+def str_to_list(words: str):
+    return words.split(',')
+
+def list_to_string(words):
+    return ",".join(words)
 
 
 if __name__ == "__main__":

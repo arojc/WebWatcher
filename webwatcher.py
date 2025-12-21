@@ -3,6 +3,7 @@ from webcrawler import web_crawler
 import misc_lib
 import simple_gui as sg
 
+
 def webwatcher(url, searched_text):
 
     zvok_obvestilo = ObvestiloZvok()

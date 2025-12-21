@@ -1,7 +1,7 @@
 import unittest
-
 import misc_lib
 import soundwarning
+from data_man import data_man
 
 
 class WebwatcherTests(unittest.TestCase):
@@ -19,6 +19,15 @@ class WebwatcherTests(unittest.TestCase):
         misc_lib.set_text_searched("radomlje")
         kraj = misc_lib.get_text_searched()
         self.assertEqual(kraj, "radomlje")
+
+    def test_data_man(self):
+        data = data_man()
+        watch_list = {}
+        watch_list["url"] = ["ena", "dva"]
+        data.set_data(watch_list)
+        watch_list1 = data.get_data()
+        self.assertEqual(len(watch_list1), 1)
+        self.assertEqual(len(watch_list1["url"]), 2)
 
 
 if __name__ == '__main__':
