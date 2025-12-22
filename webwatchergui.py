@@ -4,6 +4,8 @@ import misc_lib
 import threading
 from webwatcher import webwatcher
 import webbrowser
+from data_man import data_man
+from website import Website, Websites
 
 case_sensitive = False
 
@@ -87,8 +89,58 @@ def izvedi_async():
     threading.Thread(target=izvedi, daemon=True).start()
 
 
+def show_site(name: str):
+    site = sites.get_by_name(name)
+    if site is not None:
+        name_entry.insert(0, site.name)
+        url_entry.insert(0, site.url)
+        word_entry.insert(0, site.words_as_string())
+
+def show_first_site():
+    site = sites.sites[0]
+    if site is not None:
+        name_entry.delete(0, "end")
+        url_entry.delete(0, "end")
+        word_entry.delete(0, "end")
+
+        name_entry.insert(0, site.name)
+        url_entry.insert(0, site.url)
+        word_entry.insert(0, site.words_as_string())
+
+def show_next_site():
+    global site_index
+    site_index = (site_index+1)%len(sites.sites)
+    site = sites.sites[site_index]
+    log(str(site_index))
+    if site is not None:
+        name_entry.delete(0, "end")
+        url_entry.delete(0, "end")
+        word_entry.delete(0, "end")
+
+        name_entry.insert(0, site.name)
+        url_entry.insert(0, site.url)
+        word_entry.insert(0, site.words_as_string())
+
+def show_previous_site():
+    global site_index
+    site_index = (site_index-1)%len(sites.sites)
+    site = sites.sites[site_index]
+    log(str(site_index))
+    if site is not None:
+        name_entry.delete(0, "end")
+        url_entry.delete(0, "end")
+        word_entry.delete(0, "end")
+
+        name_entry.insert(0, site.name)
+        url_entry.insert(0, site.url)
+        word_entry.insert(0, site.words_as_string())
+
+
 def main():
-    global name_entry, url_entry, word_entry, case_btn, output_text
+    global name_entry, url_entry, word_entry, case_btn, output_text, sites, site_index
+
+    sites = Websites.load("/home/antonrojc/.config/webwatcher/config2.json")
+    site_index = 0
 
     root = tk.Tk()
     root.title("Iskalni GUI")
@@ -112,6 +164,8 @@ def main():
     word_entry.insert(0, misc_lib.get_text_searched())
     word_entry.pack(padx=10, pady=5)
 
+    show_first_site()
+
     # Gumbi v vrstici
     btn_frame = tk.Frame(root)
     btn_frame.pack(padx=10, pady=5, fill="x")
@@ -127,6 +181,12 @@ def main():
 
     save_btn = ttk.Button(btn_frame, text="Shrani", command=save_value)
     save_btn.pack(side="left", padx=5)
+
+    back_btn = ttk.Button(btn_frame, text="<-", command=show_previous_site)
+    back_btn.pack(side="left", padx=5)
+
+    forward_btn = ttk.Button(btn_frame, text="->", command=show_next_site)
+    forward_btn.pack(side="left", padx=5)
 
     # Output polje
     tk.Label(root, text="Rezultati:").pack(anchor="w", padx=10, pady=5)

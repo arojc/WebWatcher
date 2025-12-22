@@ -65,7 +65,7 @@ class Website:
             self._words.remove(word)
 
     def words_as_string(self) -> str:
-        return ", ".join(self._words)
+        return ",".join(self._words)
 
     # ---------- JSON ----------
     def to_dict(self) -> Dict:
