@@ -89,7 +89,7 @@ def izvedi_async():
     threading.Thread(target=izvedi, daemon=True).start()
 
 
-def show_site(name: str):
+def show_site_by_name(name: str):
     site = sites.get_by_name(name)
     if site is not None:
         name_entry.insert(0, site.name)
@@ -98,34 +98,22 @@ def show_site(name: str):
 
 def show_first_site():
     site = sites.sites[0]
-    if site is not None:
-        name_entry.delete(0, "end")
-        url_entry.delete(0, "end")
-        word_entry.delete(0, "end")
-
-        name_entry.insert(0, site.name)
-        url_entry.insert(0, site.url)
-        word_entry.insert(0, site.words_as_string())
+    show_new_site(site)
 
 def show_next_site():
     global site_index
     site_index = (site_index+1)%len(sites.sites)
     site = sites.sites[site_index]
-    log(str(site_index))
-    if site is not None:
-        name_entry.delete(0, "end")
-        url_entry.delete(0, "end")
-        word_entry.delete(0, "end")
-
-        name_entry.insert(0, site.name)
-        url_entry.insert(0, site.url)
-        word_entry.insert(0, site.words_as_string())
+    show_new_site(site)
 
 def show_previous_site():
     global site_index
     site_index = (site_index-1)%len(sites.sites)
     site = sites.sites[site_index]
-    log(str(site_index))
+    show_new_site(site)
+
+
+def show_new_site(site: Website):
     if site is not None:
         name_entry.delete(0, "end")
         url_entry.delete(0, "end")
@@ -134,6 +122,7 @@ def show_previous_site():
         name_entry.insert(0, site.name)
         url_entry.insert(0, site.url)
         word_entry.insert(0, site.words_as_string())
+
 
 
 def main():
