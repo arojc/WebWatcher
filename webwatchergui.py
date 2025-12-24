@@ -4,7 +4,6 @@ import misc_lib
 import threading
 from webwatcher import webwatcher
 import webbrowser
-from data_man import data_man
 from website import Website, Websites
 
 case_sensitive = False
@@ -39,8 +38,6 @@ def vstavi_link(text_widget: tk.Text, besedilo: str, url: str):
     )
 
     text_widget.configure(state="disabled")
-
-
 
 
 def log(message: str):

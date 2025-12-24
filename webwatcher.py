@@ -2,6 +2,7 @@ from soundwarning import ObvestiloZvok
 from webcrawler import web_crawler
 import misc_lib
 import simple_gui as sg
+from website import Websites, Website
 
 
 def webwatcher(url, searched_text):
@@ -15,16 +16,20 @@ def webwatcher(url, searched_text):
 
 if __name__ == "__main__":
     zvok_obvestilo = ObvestiloZvok()
-    the_word = misc_lib.get_text_searched()
 
-    result_num = webwatcher(misc_lib.url, the_word)
-    print("webwatcher " + the_word + " " + str(result_num))
+    sites = Websites.load("/home/antonrojc/.config/webwatcher/config2.json")
 
-    if result_num > 0:
-        sg.open_popup(misc_lib.make_report_str_found(result_num, the_word), misc_lib.url)
-    else:
-        sg.open_popup(misc_lib.make_report_str_found(result_num, the_word))
+    for site in sites:
+        print(site.name)
 
-    zvok_obvestilo.predvajaj()
+        result_num = webwatcher(site.url, site.words_as_string())
+        print("webwatcher " + site.name + " " + str(result_num))
+
+        if result_num > 0:
+            sg.open_popup(misc_lib.make_report_str_found(result_num, site.name), site.url)
+        else:
+            sg.open_popup(misc_lib.make_report_str_found(result_num, site.name))
+
+        zvok_obvestilo.predvajaj()
 
 
