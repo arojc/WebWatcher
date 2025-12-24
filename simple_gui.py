@@ -5,10 +5,7 @@ _NOTIFICATION_ID = 4242
 
 
 def linux_popup(text: str, url: str | None = None, exp_time: int = 0):
-    """
-    Prikaže Linux native obvestilo.
-    Če je url podan, klik na obvestilo odpre link v brskalniku.
-    """
+
     cmd = [
         "notify-send",
         "--replace-id", str(_NOTIFICATION_ID),
@@ -29,7 +26,6 @@ def linux_popup(text: str, url: str | None = None, exp_time: int = 0):
             text=True
         )
 
-        # Čakamo, če uporabnik klikne
         action = p.stdout.read().strip()
         if action == "open":
             subprocess.Popen(["xdg-open", url])

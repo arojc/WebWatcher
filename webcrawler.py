@@ -10,12 +10,10 @@ import simple_gui as sg
 
 class web_crawler:
 
-    def __init__(self, url, iskani_nizi, obvestilo_zvok=None):
-        self.url = url
-        self.stringi = iskani_nizi
-        self.obvestilo_zvok = obvestilo_zvok
+    def __init__(self):
+        pass
 
-    def preveri_string_v_url(self):
+    def preveri_string_v_url(self, url: str, stringi):
         # Nastavitve za "headless" brskanje (brez GUI-ja)
         options = Options()
         options.add_argument("-headless")  # novi headless način
@@ -28,7 +26,7 @@ class web_crawler:
         driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
 
         try:
-            driver.get(self.url)
+            driver.get(url)
             time.sleep(5)  # počakaj, da se JS naloži - prilagodi po potrebi
 
             html = driver.page_source
@@ -41,7 +39,7 @@ class web_crawler:
             normalized_text = re.sub(r"\s+", " ", text).strip()
 
             thesum = 0
-            for word in self.stringi:
+            for word in stringi:
                 # Tudi string normaliziramo na enak način
                 normalized_string = re.sub(r"\s+", " ", word).strip()
                 thesum += normalized_text.lower().count(normalized_string.lower())

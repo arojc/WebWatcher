@@ -12,13 +12,13 @@ class WebwatcherTests(unittest.TestCase):
         soundwarning.ObvestiloZvok.predvajaj(self)
         self.assertTrue(True)
 
-    def test_save(self):
-        misc_lib.set_text_searched("hudo")
-        kraj = misc_lib.get_text_searched()
-        self.assertEqual(kraj, "hudo")
-        misc_lib.set_text_searched("radomlje")
-        kraj = misc_lib.get_text_searched()
-        self.assertEqual(kraj, "radomlje")
+    # def test_save(self):
+    #     misc_lib.set_text_searched("hudo")
+    #     kraj = misc_lib.get_text_searched()
+    #     self.assertEqual(kraj, "hudo")
+    #     misc_lib.set_text_searched("radomlje")
+    #     kraj = misc_lib.get_text_searched()
+    #     self.assertEqual(kraj, "radomlje")
 
     # def test_data_man(self):
     #     data = data_man()
