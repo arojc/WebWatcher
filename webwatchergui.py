@@ -59,7 +59,7 @@ def izvedi():
 
     result = webwatcher(the_url, the_word)
 
-    log(misc_lib.make_report_str_found(result, the_word))
+    log(misc_lib.make_report_str_found(result, the_name))
 
     vstavi_link(output_text, the_name, the_url)
     output_text.configure(state="normal")
@@ -100,6 +100,7 @@ def add_new_site():
     sites.add(new_site)
     site_index = new_site
     show_new_site()
+    save_sites()
 
 def save_site():
     site_index.name = name_entry.get()
@@ -111,9 +112,18 @@ def save_site():
 def save_sites():
     sites.save(misc_lib.config_file_path)
 
-def delete_site(the_name: str):
-    sites.remove_by_name(name_entry.get())
-    pass
+def delete_site():
+    global site_index
+
+    old_site_index = site_index
+
+    if len(sites) == 0:
+        return
+    elif len(sites) == 1:
+        add_new_site()
+
+    sites.remove_by_name(old_site_index.name)
+    sites.save(misc_lib.config_file_path)
 
 
 def main():
@@ -159,6 +169,12 @@ def main():
     del_btn = ttk.Button(btn_frame1, text="Zbriši", command=delete_site)
     del_btn.pack(side="left", padx=5)
 
+    back_btn = ttk.Button(btn_frame1, text="<-", command=show_previous_site)
+    back_btn.pack(side="left", padx=5)
+
+    forward_btn = ttk.Button(btn_frame1, text="->", command=show_next_site)
+    forward_btn.pack(side="left", padx=5)
+
     btn_frame2 = tk.Frame(root)
     btn_frame2.pack(padx=10, pady=5, fill="x")
 
@@ -168,12 +184,6 @@ def main():
     clear_btn = ttk.Button(btn_frame2, text="Počisti", command=clear_output)
     clear_btn.pack(side="left", padx=5)
 
-    back_btn = ttk.Button(btn_frame2, text="<-", command=show_previous_site)
-    back_btn.pack(side="left", padx=5)
-
-    forward_btn = ttk.Button(btn_frame2, text="->", command=show_next_site)
-    forward_btn.pack(side="left", padx=5)
-
     # Output polje
     tk.Label(root, text="Rezultati:").pack(anchor="w", padx=10, pady=5)
     output_text = tk.Text(root, height=12, width=70, state="disabled", wrap="word")
@@ -182,12 +192,6 @@ def main():
     root.mainloop()
 
 
-
-# def str_to_list(words: str):
-#     return words.split(',')
-
-# def list_to_string(words):
-#     return ",".join(words)
 
 
 if __name__ == "__main__":

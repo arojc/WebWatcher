@@ -24,10 +24,10 @@ if __name__ == "__main__":
         print("webwatcher " + site.name + " " + str(result_num))
 
         if result_num > 0:
+            zvok_obvestilo.predvajaj()
             sg.open_popup(misc_lib.make_report_str_found(result_num, site.name), site.url)
         else:
             sg.open_popup(misc_lib.make_report_str_found(result_num, site.name))
 
-        zvok_obvestilo.predvajaj()
 
 
