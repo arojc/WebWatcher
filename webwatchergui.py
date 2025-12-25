@@ -70,39 +70,57 @@ def izvedi_async():
     threading.Thread(target=izvedi, daemon=True).start()
 
 def show_first_site():
-    site = sites.sites[0]
-    show_new_site(site)
+    site_index = sites.sites[0]
+    show_new_site()
 
 def show_next_site():
     global site_index
-    site_index = (site_index+1)%len(sites.sites)
-    site = sites.sites[site_index]
-    show_new_site(site)
+    site_index = sites.sites[(sites.sites.index(site_index)+1)%len(sites.sites)]
+    show_new_site()
 
 def show_previous_site():
     global site_index
-    site_index = (site_index-1)%len(sites.sites)
-    site = sites.sites[site_index]
-    show_new_site(site)
+    site_index = sites.sites[(sites.sites.index(site_index)-1)%len(sites.sites)]
+    show_new_site()
 
 
-def show_new_site(site: Website):
-    if site is not None:
+def show_new_site():
+    if site_index is not None:
         name_entry.delete(0, "end")
         url_entry.delete(0, "end")
         word_entry.delete(0, "end")
 
-        name_entry.insert(0, site.name)
-        url_entry.insert(0, site.url)
-        word_entry.insert(0, site.words_as_string())
+        name_entry.insert(0, site_index.name)
+        url_entry.insert(0, site_index.url)
+        word_entry.insert(0, site_index.words_as_string())
 
+def add_new_site():
+    global site_index
+    new_site = Website("New site", "https://CHANGE.ME", ["Change","those","words", "for", "Gods", "sake"])
+    sites.add(new_site)
+    site_index = new_site
+    show_new_site()
+
+def save_site():
+    site_index.name = name_entry.get()
+    site_index.url = url_entry.get()
+    site_index.words = word_entry.get().split(",")
+
+    save_sites()
+
+def save_sites():
+    sites.save(misc_lib.config_file_path)
+
+def delete_site(the_name: str):
+    sites.remove_by_name(name_entry.get())
+    pass
 
 
 def main():
     global name_entry, url_entry, word_entry, case_btn, output_text, sites, site_index
 
     sites = Websites.load(misc_lib.config_file_path)
-    site_index = 0
+    site_index = sites.sites[0]
 
     root = tk.Tk()
     root.title("Searching GUI")
@@ -129,22 +147,31 @@ def main():
     show_first_site()
 
     # Gumbi v vrstici
-    btn_frame = tk.Frame(root)
-    btn_frame.pack(padx=10, pady=5, fill="x")
+    btn_frame1 = tk.Frame(root)
+    btn_frame1.pack(padx=10, pady=5, fill="x")
 
-    execute_btn = ttk.Button(btn_frame, text="Izvedi", command=izvedi_async)
+    add_btn = ttk.Button(btn_frame1, text="Dodaj", command=add_new_site)
+    add_btn.pack(side="left", padx=5)
+
+    save_btn = ttk.Button(btn_frame1, text="Shrani", command=save_site)
+    save_btn.pack(side="left", padx=5)
+
+    del_btn = ttk.Button(btn_frame1, text="Zbriši", command=delete_site)
+    del_btn.pack(side="left", padx=5)
+
+    btn_frame2 = tk.Frame(root)
+    btn_frame2.pack(padx=10, pady=5, fill="x")
+
+    execute_btn = ttk.Button(btn_frame2, text="Izvedi", command=izvedi_async)
     execute_btn.pack(side="left", padx=5)
 
-    clear_btn = ttk.Button(btn_frame, text="Počisti", command=clear_output)
+    clear_btn = ttk.Button(btn_frame2, text="Počisti", command=clear_output)
     clear_btn.pack(side="left", padx=5)
 
-    # save_btn = ttk.Button(btn_frame, text="Shrani", command=save_value)
-    # save_btn.pack(side="left", padx=5)
-
-    back_btn = ttk.Button(btn_frame, text="<-", command=show_previous_site)
+    back_btn = ttk.Button(btn_frame2, text="<-", command=show_previous_site)
     back_btn.pack(side="left", padx=5)
 
-    forward_btn = ttk.Button(btn_frame, text="->", command=show_next_site)
+    forward_btn = ttk.Button(btn_frame2, text="->", command=show_next_site)
     forward_btn.pack(side="left", padx=5)
 
     # Output polje
@@ -154,8 +181,7 @@ def main():
 
     root.mainloop()
 
-# def save_value():
-#     misc_lib.set_text_searched(word_entry.get())
+
 
 # def str_to_list(words: str):
 #     return words.split(',')

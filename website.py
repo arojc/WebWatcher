@@ -103,14 +103,26 @@ class Websites:
         if self.get_by_url(site.url):
             raise ValueError(f"Website z URL '{site.url}' že obstaja")
 
+        if self.get_by_name(site.name):
+            raise ValueError(f"Website z imenom '{site.name}' že obstaja")
+
         self._sites.append(site)
 
     def remove_by_url(self, url: str):
         self._sites = [s for s in self._sites if s.url != url]
 
+    def remove_by_name(self, name: str):
+        self._sites = [s for s in self._sites if s.name != name]
+
     def get_by_url(self, url: str) -> Website | None:
         for site in self._sites:
             if site.url == url:
+                return site
+        return None
+
+    def get_by_name(self, name: str) -> Website | None:
+        for site in self._sites:
+            if site.name == name:
                 return site
         return None
 
