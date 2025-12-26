@@ -1,14 +1,17 @@
 [Unit]
-Description=WebWatcher background service
-After=default.target network-online.target
+Description=WebWatcher Daemon
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStartPre=/bin/sleep 30
-ExecStart=/home/antonrojc/PycharmProjects/WebWatcher/dist/webwatcher/webwatcher
-WorkingDirectory=/home/antonrojc/PycharmProjects/WebWatcher
-Restart=no
+ExecStart=/usr/bin/webwatcher
+Restart=on-failure
+RestartSec=5
+
+# Delovni imenik in okolje
+WorkingDirectory=/var/lib/webwatcher
+Environment=PYTHONUNBUFFERED=1
 
 [Install]
-WantedBy=default.target
-
+WantedBy=multi-user.target
