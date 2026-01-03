@@ -8,7 +8,8 @@ sudo cp ../dist/webwatchergui /usr/bin
 sudo mkdir -p /etc/webwatcher
 
 ## SERVICE FOR DAEMON
-sudo cp webwatcher.service /usr/lib/systemd/system
+mkdir -p ~/.config/systemd/user
+cp webwatcher.service ~/.config/systemd/user
 systemctl --user daemon-reexec
 systemctl --user enable webwatcher.service
 

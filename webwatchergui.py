@@ -70,6 +70,7 @@ def izvedi_async():
     threading.Thread(target=izvedi, daemon=True).start()
 
 def show_first_site():
+    global site_index
     site_index = sites.sites[0]
     show_new_site()
 
@@ -85,6 +86,7 @@ def show_previous_site():
 
 
 def show_new_site():
+    global site_index
     if site_index is not None:
         name_entry.delete(0, "end")
         url_entry.delete(0, "end")
@@ -156,7 +158,7 @@ def main():
 
     show_first_site()
 
-    # Gumbi v vrstici
+    # Gumbi v vrstici 1
     btn_frame1 = tk.Frame(root)
     btn_frame1.pack(padx=10, pady=5, fill="x")
 
@@ -175,6 +177,7 @@ def main():
     forward_btn = ttk.Button(btn_frame1, text="->", command=show_next_site)
     forward_btn.pack(side="left", padx=5)
 
+    # Gumbi v vrstici 2
     btn_frame2 = tk.Frame(root)
     btn_frame2.pack(padx=10, pady=5, fill="x")
 

@@ -4,14 +4,8 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=simple
 ExecStart=/usr/bin/webwatcher
-Restart=on-failure
-RestartSec=5
-
-# Delovni imenik in okolje
-WorkingDirectory=/var/lib/webwatcher
-Environment=PYTHONUNBUFFERED=1
+Restart=no
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

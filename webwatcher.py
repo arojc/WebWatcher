@@ -6,6 +6,7 @@ from website import Websites, Website
 
 
 def webwatcher(url, searched_text):
+    print(f"webwatcher.webwatcher {searched_text} {url[:30]}")
 
     preverjalnik = web_crawler()
     result_num = preverjalnik.preveri_string_v_url(url, searched_text.split(','))
@@ -13,9 +14,15 @@ def webwatcher(url, searched_text):
 
 
 if __name__ == "__main__":
+    print(f"webwatcher.__main__")
+
     zvok_obvestilo = ObvestiloZvok()
 
-    sites = Websites.load(misc_lib.config_file_path)
+    try:
+        sites = Websites.load(misc_lib.config_file_path)
+        print(f"webwatcher.__main__ loading sites from {misc_lib.config_file_path}")
+    except Exception as ex:
+        print(f"webwatcher.__main__ ERROR loading sites from {misc_lib.config_file_path} {ex}")
 
     for site in sites:
         print(site.name)

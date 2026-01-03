@@ -14,6 +14,8 @@ class web_crawler:
         pass
 
     def preveri_string_v_url(self, url: str, stringi):
+        print("webcrawler.preveri_string_v_url")
+
         # Nastavitve za "headless" brskanje (brez GUI-ja)
         options = Options()
         options.add_argument("-headless")  # novi headless način
@@ -53,6 +55,8 @@ class web_crawler:
 
 
     def wait_for_internet(self, interval: int = 5, timeout: int = 3):
+        print("webcrawler.wait_for_internet")
+
         root = None
         popup_shown = False
 

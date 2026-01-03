@@ -5,6 +5,7 @@ _NOTIFICATION_ID = 4242
 
 
 def linux_popup(text: str, url: str | None = None, exp_time: int = 0):
+    print("simple_gui.linux_popup")
 
     cmd = [
         "notify-send",
@@ -35,9 +36,11 @@ def linux_popup(text: str, url: str | None = None, exp_time: int = 0):
 
 
 def open_popup(text: str, url: str | None = None, exp_time: int = 0):
+    print("simple_gui.open_popup")
     threading.Thread(target=linux_popup, args=(text, url, exp_time)).start()
 
 def close_popup():
+    print("simple_gui.close_popup")
     subprocess.run([
         "notify-send",
         "--replace-id", str(_NOTIFICATION_ID),
@@ -47,6 +50,7 @@ def close_popup():
     ], check=False)
 
 if __name__ == "__main__":
+    print("simple_gui.__main__")
     open_popup(
         "Na strani je bila najdena sprememba.",
         None,
